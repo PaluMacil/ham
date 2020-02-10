@@ -2,7 +2,6 @@ package experiment
 
 import (
 	"fmt"
-	"strings"
 )
 
 type Class int
@@ -44,35 +43,6 @@ type Classes struct {
 	Spam []string
 }
 
-func (c Classes) WordCounts() ClassWordCounts {
-	var counts ClassWordCounts
-	for _, msg := range c.Ham {
-		for _, word := range strings.Split(msg, " ") {
-			if word == "" {
-				continue
-			} else {
-				counts.Ham++
-			}
-		}
-	}
-	for _, msg := range c.Spam {
-		for _, word := range strings.Split(msg, " ") {
-			if word == "" {
-				continue
-			} else {
-				counts.Spam++
-			}
-		}
-	}
-
-	return counts
-}
-
-type ClassWordCounts struct {
-	Ham  int
-	Spam int
-}
-
 type TestSet struct {
 	Cases []TestCase
 }
@@ -80,8 +50,4 @@ type TestSet struct {
 type TestCase struct {
 	Class Class
 	Text  string
-}
-
-type Preprocessor interface {
-	Process(original string) string
 }

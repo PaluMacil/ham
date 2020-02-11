@@ -7,21 +7,60 @@ classifier in Go. This supervised learning activity is accomplished using a
 Naive Bayes classifier. This simple algorithm assumes conditional independence,
 does a lot of counts, calculates some ratios, and multiplies them together.
 
-### Project and Course Name
+### Project Student and Course Name
 
-Project 1: Exploratory Data Analysis
+*Project 1:* Exploratory Data Analysis
 
-CIS 678, Winter 2020
+*Student:* Daniel Wolf
+
+*Course:* CIS 678, Winter 2020
 
 ### Implementation
 
+#### Problem and Approach
+
+*Problem:* Determine what class (C) a new message (M) belongs to.
+There are two classes, ‘ham’ and ‘spam’.
+
+*Approach:*
+- Each word position in a message is an attribute
+- The value each attribute takes on is the word in that position
+
+*Smoothing:* In order to prevent words from preventing a classification 
+if never observed to be in a class during training, a smoothing 
+variable of 1 is added to the frequency of each word. The denominator 
+is also adjusted as a result, adding the length of the vocabulary to the length of the class's map of word frequencies.
+
+```
+func (wf WordFrequency) Probability(v Vocabulary) Probability {
+	p := make(map[string]float64)
+	for _, vocabWord := range v {
+		p[vocabWord] = float64(wf[vocabWord]+1) / float64(len(wf)+len(v))
+	}
+
+	return p
+}
+```
+
+*Common structures and patterns:* Lookups of any type take advantage of the map type in Go. This is used for word frequency and probability. Floats are tracked in 64 bit variables to ensure sufficient precision 
+and they are truncated only when printed to the terminal.
+
+#### Classification Formula
+
+This formula takes the larger value of the probabilities (the maximum) that the sms
+message is in each class. This is calculated based upon the total 
+probability that a message is in a class times the probability
+of each word being in a message of that class. The general form
+of this formula is below:
+
+![classification formula](classification.png)
+
 #### Organization
 
-This project is organized into an experiment, analysis, and the main package and 
-tests. Theses areas of the application have the following purposes:
+This project is organized into an experiment, analysis, main package and 
+tests. These areas of the application have the following purposes:
 
-- Experiment: holding the shuffled SMS messages, divided by set (train or test) and 
-class (spam or ham).
+- Experiment: holding the shuffled SMS messages, organized separately by set (train or test) and class (spam or ham).
 - Analysis: holding calculations and statistics as well as a trained model for 
 training classes and finally test results.
 - main: connecting options to experiment code, making copies of the original 
@@ -62,7 +101,7 @@ spamScore = math.Pow(10, spamScore)
 
 ##### Preprocessing: Remove Punctuation
 
-Removing punctuation has almost no affect on the results. This might be due to 
+Removing punctuation has almost no effect on the results. This might be due to 
 the two classes tending to have similar punctuation. Also, many text
 messages don't use any punctuation.
 
@@ -85,7 +124,7 @@ accuracy uplift from the stemmer means that the combination was also not helpful
 ##### Preprocessing: Remove 100 Most Common
 
 This preprocessor removes the 100 most common English words from all messages. 
-While the accuracy did get a small list from this adjustment, the difference 
+While the accuracy did get a small lift from this adjustment, the difference 
 was very small, and the improvement was mostly to ham identification whereas 
 more ham was incorrectly identifies as spam. For this reason, I would not use 
 this in a production environment.
@@ -222,7 +261,3 @@ The purpose of this project was academic in nature. I don't recommend using
 this code in production. I have licensed this code with an MIT license, so 
 reuse is permissible. If you are in an academic institution, you might have 
 additional guidelines to follow.
-
-### Author Details
-
-Daniel Wolf

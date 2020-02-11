@@ -15,8 +15,6 @@ func main() {
 	flag.StringVar(&flagFilename, "file", "textMsgs.data", "filename")
 	var flagDelimiter string
 	flag.StringVar(&flagDelimiter, "delimiter", "\t", "delimiter between class and words in data (default is tab)")
-	var flagWriteToFile bool
-	flag.BoolVar(&flagWriteToFile, "write", false, "write classes to files")
 	flag.Parse()
 
 	exp, err := parse.FromFile(flagFilename, flagDelimiter)
@@ -26,12 +24,6 @@ func main() {
 	}
 
 	analyses := analysis.Run(exp)
-
-	if flagWriteToFile {
-		if err := analyses.WriteToFile(); err != nil {
-			fmt.Printf("could not write analysis to file: %s", err)
-		}
-	}
 
 	for _, a := range analyses {
 		c := color.New(color.FgCyan).Add(color.Underline)

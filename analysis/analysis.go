@@ -124,10 +124,6 @@ type Class struct {
 
 type Analyses []Analysis
 
-func (a Analyses) WriteToFile() error {
-	return nil
-}
-
 func Run(ex experiment.Experiment) Analyses {
 	var analyses Analyses
 

@@ -7,14 +7,6 @@ classifier in Go. This supervised learning activity is accomplished using a
 Naive Bayes classifier. This simple algorithm assumes conditional independence,
 does a lot of counts, calculates some ratios, and multiplies them together.
 
-### Project Student and Course Name
-
-*Project 1:* Exploratory Data Analysis
-
-*Student:* Daniel Wolf
-
-*Course:* CIS 678, Winter 2020
-
 ### Implementation
 
 #### Problem and Approach
@@ -257,7 +249,5 @@ will still need to manually go through some spam, but the majority is caught.
 
 ### License, Limitations, and Usage
 
-The purpose of this project was academic in nature. I don't recommend using 
-this code in production. I have licensed this code with an MIT license, so 
-reuse is permissible. If you are in an academic institution, you might have 
-additional guidelines to follow.
+I don't recommend using this code in production. I have licensed this code with an MIT license, so 
+reuse is permissible.
